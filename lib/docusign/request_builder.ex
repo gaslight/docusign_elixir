@@ -63,6 +63,7 @@ defmodule DocuSign.RequestBuilder do
         map_for_body =
           value
           |> Map.from_struct()
+          |> IO.inspect(label: "Before prune nils")
           |> prune_nils()
 
         add_param(request, :body, :body, map_for_body)
@@ -112,7 +113,7 @@ defmodule DocuSign.RequestBuilder do
     |> Map.put_new_lazy(:body, &Tesla.Multipart.new/0)
     |> Map.update!(
       :body,
-      &Tesla.Multipart.add_field(&1, key, Poison.encode!(value),
+      &Tesla.Multipart.add_field(&1, key, Poison.encode!(value |> prune_nils()),
         headers: [{:"Content-Type", "application/json"}]
       )
     )

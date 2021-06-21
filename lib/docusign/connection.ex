@@ -27,6 +27,8 @@ defmodule DocuSign.Connection do
     use Tesla
     plug(Tesla.Middleware.EncodeJson, engine: Poison)
 
+    plug Tesla.Middleware.Logger, debug: true
+
     @doc """
     Configure an authless client connection
 
