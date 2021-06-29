@@ -2,7 +2,7 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-config :docusign, private_key: System.get_env("DOCUSIGN_PRIVATE_KEY") || "docusign_key.pem"
+config :docusign, private_key: File.read!("docusign_key.pem")
 config :docusign, token_expires_in: 3600
 
 config :docusign,
